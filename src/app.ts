@@ -1,7 +1,9 @@
-const express = require('express');
-const mysql = require('mysql2/promise');
-require('dotenv').config();
-const routes = require('./routes');
+import express from 'express';
+import mysql, { RowDataPacket } from 'mysql2/promise';
+import dotenv from 'dotenv';
+import routes from './routes';
+
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,7 +20,11 @@ async function main() {
     database: process.env.DB_DATABASE,
   });
 
-  const [rows] = await connection.execute('SELECT NOW() AS now');
+  interface TimeRow extends RowDataPacket {
+    now: Date;
+  }
+
+  const [rows] = await connection.execute<TimeRow[]>('SELECT NOW() AS now');
   console.log('⏰ Time:', rows[0].now);
 
   await connection.end();
