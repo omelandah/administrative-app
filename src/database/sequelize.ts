@@ -2,10 +2,6 @@ import { Sequelize } from 'sequelize';
 import { initStudent, Student } from './models/Student';
 import { initTeacher, Teacher } from './models/Teacher';
 import { initStudentTeacher, StudentTeacher } from './models/StudentTeacher';
-import {
-  initStudentSuspension,
-  StudentSuspension,
-} from './models/StudentSuspension';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -22,8 +18,7 @@ export const sequelize = new Sequelize(DB_DATABASE!, DB_USER!, DB_PASSWORD!, {
 initStudent(sequelize);
 initTeacher(sequelize);
 initStudentTeacher(sequelize);
-initStudentSuspension(sequelize);
 
 // Associations
-Student.associate({ Teacher, StudentTeacher, StudentSuspension });
-Teacher.associate({ Student, StudentTeacher, StudentSuspension });
+Student.associate({ Teacher, StudentTeacher });
+Teacher.associate({ Student, StudentTeacher });
