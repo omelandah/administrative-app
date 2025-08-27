@@ -6,6 +6,7 @@ export interface StudentTeacherAttributes {
   id: string;
   studentUuid: string;
   teacherUuid: string;
+  isSuspended: boolean | null;
 }
 
 export interface StudentTeacherCreationAttributes
@@ -18,6 +19,7 @@ export class StudentTeacher
   public id!: string;
   public studentUuid!: string;
   public teacherUuid!: string;
+  public isSuspended!: boolean | null;
 
   // association fields
   public student?: Student;
@@ -75,6 +77,11 @@ export function initStudentTeacher(
         field: 'teacher_uuid',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+      },
+      isSuspended: {
+        type: DataTypes.BOOLEAN,
+        field: 'is_suspended',
+        allowNull: true,
       },
     },
     {

@@ -9,7 +9,6 @@ import {
 } from 'sequelize';
 import { Student } from './Student';
 import { StudentTeacher } from './StudentTeacher';
-import { StudentSuspension } from './StudentSuspension';
 
 interface TeacherAttributes {
   id: string;
@@ -29,31 +28,20 @@ export class Teacher
   public getStudents!: HasManyGetAssociationsMixin<Student>;
 
   public readonly students?: Student[];
-  public suspendedStudents?: Student[];
 
   public static associations: {
     students: Association<Teacher, Student>;
-    suspendedStudents: Association<Teacher, Student>;
   };
 
   public static associate(models: {
     Student: typeof Student;
     StudentTeacher: typeof StudentTeacher;
-    StudentSuspension: typeof StudentSuspension;
   }) {
     Teacher.belongsToMany(models.Student, {
       through: models.StudentTeacher,
       foreignKey: 'teacherUuid',
       otherKey: 'studentUuid',
       as: 'students',
-      onDelete: 'CASCADE',
-    });
-
-    Teacher.belongsToMany(models.Student, {
-      through: models.StudentSuspension,
-      foreignKey: 'teacherUuid',
-      otherKey: 'studentUuid',
-      as: 'suspendedStudents',
       onDelete: 'CASCADE',
     });
   }

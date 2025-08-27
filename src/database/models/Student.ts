@@ -1,12 +1,10 @@
 import { DataTypes, Model, Sequelize, Optional, Association } from 'sequelize';
 import { Teacher } from './Teacher';
 import { StudentTeacher } from './StudentTeacher';
-import { StudentSuspension } from './StudentSuspension';
 
 export interface StudentAttributes {
   id: string;
   email: string;
-  isSuspended?: boolean;
 }
 
 export interface StudentCreationAttributes
@@ -18,37 +16,25 @@ export class Student
 {
   public id!: string;
   public email!: string;
-  public isSuspended?: boolean;
 
   // association fields
   public teachers?: Teacher[];
-  public suspendedByTeachers?: Teacher[];
 
   // Sequelize metadata
   public static associations: {
     teachers: Association<Student, Teacher>;
-    suspendedByTeachers: Association<Student, Teacher>;
   };
 
   // ✅ typed associate function
   public static associate(models: {
     Teacher: typeof Teacher;
     StudentTeacher: typeof StudentTeacher;
-    StudentSuspension: typeof StudentSuspension;
   }) {
     Student.belongsToMany(models.Teacher, {
       through: models.StudentTeacher,
       foreignKey: 'studentUuid',
       otherKey: 'teacherUuid',
       as: 'teachers',
-      onDelete: 'CASCADE',
-    });
-
-    Student.belongsToMany(models.Teacher, {
-      through: models.StudentSuspension,
-      foreignKey: 'studentUuid',
-      otherKey: 'teacherUuid',
-      as: 'suspendedByTeachers',
       onDelete: 'CASCADE',
     });
   }
@@ -68,11 +54,6 @@ export function initStudent(sequelize: Sequelize): typeof Student {
         type: DataTypes.STRING(56),
         allowNull: false,
         field: 'email',
-      },
-      isSuspended: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-        field: 'is_suspended',
       },
     },
     {
