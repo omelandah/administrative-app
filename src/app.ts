@@ -1,7 +1,11 @@
 import express from 'express';
-import mysql, { RowDataPacket } from 'mysql2/promise';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+
 import routes from './routes';
+import { RowDataPacket } from 'mysql2/promise';
 import { createDbConnection } from './config/database';
 
 dotenv.config();
@@ -10,8 +14,14 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(compression());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(cors());
+
+app.use(helmet());
 
 app.use('/api', routes);
 
