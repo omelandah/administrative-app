@@ -1,9 +1,13 @@
-import {
-  StudentTeacher,
-  StudentTeacherCreationAttributes,
-} from '../database/models/StudentTeacher';
+// import {
+//   StudentTeacher,
+//   StudentTeacherCreationAttributes,
+// } from '../database/models/StudentTeacher';
 
-const save = async (body: StudentTeacherCreationAttributes) => {
+import sequelize from '../database';
+
+const { StudentTeacher } = sequelize.models;
+
+const save = async (body: any) => {
   return await StudentTeacher.create(body);
 };
 

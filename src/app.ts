@@ -9,6 +9,8 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api', routes);
@@ -21,7 +23,7 @@ async function main() {
   }
 
   const [rows] = await connection.execute<TimeRow[]>('SELECT NOW() AS now');
-  console.log('⏰ Time:', rows[0].now);
+  console.log('Connected to db - ⏰ Time:', rows[0].now);
 
   await connection.end();
 }

@@ -18,7 +18,6 @@ const registerStudentstoTeacher = async (
   }
 
   await (teacher as Teacher).addStudents(students as Student[]);
-
   return true;
 };
 
