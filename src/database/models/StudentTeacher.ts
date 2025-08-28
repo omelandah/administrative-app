@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { ModelDefinition } from '../types/model.d';
 
-class StudentTeacher extends Model {
+export class StudentTeacher extends Model {
   declare id: number;
   declare studentId: string;
   declare teacherId: string;
