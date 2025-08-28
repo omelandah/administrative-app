@@ -31,5 +31,5 @@ async function main() {
 main();
 
 app.listen(PORT, () => {
-  console.log('Connected to port ', PORT);
+  console.log('Connected to port', PORT);
 });
