@@ -5,14 +5,12 @@ export async function up(queryInterface: QueryInterface) {
     {
       student_uuid: '11111111-1111-1111-1111-111111111111',
       teacher_uuid: 'aaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-      is_suspended: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       student_uuid: '33333333-3333-3333-3333-333333333333',
       teacher_uuid: 'bbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
-      is_suspended: true,
       createdAt: new Date(),
       updatedAt: new Date(),
     },
