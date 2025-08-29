@@ -5,7 +5,6 @@ import cors from 'cors';
 import compression from 'compression';
 
 import routes from './routes';
-import { RowDataPacket } from 'mysql2/promise';
 import { createDbConnection } from './config/database';
 
 dotenv.config();
@@ -28,12 +27,7 @@ app.use('/api', routes);
 async function main() {
   const connection = await createDbConnection();
 
-  interface TimeRow extends RowDataPacket {
-    now: Date;
-  }
-
-  const [rows] = await connection.execute<TimeRow[]>('SELECT NOW() AS now');
-  console.log('Connected to db - ⏰ Time:', rows[0].now);
+  console.log('Connected to database successfully !');
 
   await connection.end();
 }
