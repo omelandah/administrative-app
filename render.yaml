@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: administrative-backend
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    buildCommand: |
+      npm install
+      npm run build
+    startCommand: |
+      npm run migrate && npm run seed && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        value: admin-app-db-administrative-app.d.aivencloud.com
+      - key: DB_PORT
+        value: '18795'
+      - key: DB_NAME
+        value: defaultdb
+      - key: DB_USER
+        value: avnadmin
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL_CA
+        value: /etc/secrets/ca.pem
+
+    secretFiles:
+      - path: /etc/secrets/ca.pem
+        contents: |
+          -----BEGIN CERTIFICATE-----
+          MIIEUDCCArigAwIBAgIUPP0HzaEvDDsLlilWLXeiX+8JgCIwDQYJKoZIhvcNAQEM
+          BQAwQDE+MDwGA1UEAww1ZGUxMjJjMjktMDA3Yi00ZjgzLTg1NDEtY2I3MzllOGJi
+          MWZjIEdFTiAxIFByb2plY3QgQ0EwHhcNMjUwODI3MTEyOTA2WhcNMzUwODI1MTEy
+          OTA2WjBAMT4wPAYDVQQDDDVkZTEyMmMyOS0wMDdiLTRmODMtODU0MS1jYjczOWU4
+          YmIxZmMgR0VOIDEgUHJvamVjdCBDQTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCC
+          AYoCggGBANX0p8gBS1RLSqF9WoDat8A6/N0NzwCe2tN3F5fKDGqTIwdKtFYyEycn
+          iZWLEUfoIN3vKkOSI/ilgAIhIQPLyrryzgu/M8eoyeusyBn0oMWvWtBkUQKEDcqt
+          ql7qhaa66Tamz6iWyEypOMIHTyL6MNDurZ5lUkk8t1fZ5Igf0mHAttZ+ZrzMhIYK
+          6FV1e/lslk6epWtHCWz7cf5j+x9oM6RPt4wYawojNndW+kxF2iJrBT+Df2IjF1oT
+          R/wm/LnND3k0Eu3cfjBs7scVALCyXsclSfs7DTckN2EUQslGJa8MlKX6zwCZYLvf
+          VrRxrS4v7oo6mvI2SzXqz1N2LJQS2jn16WxD0fw3Sd+4o0wxQgesHB/YYDem8otV
+          Kci1OhE32asamorfX/qww18NFlcib+GH+OYW1C7/GSwKdngsInBJQrUiYuMsaVp7
+          kZ6Qxj7WaBPGPP2lFur3xztMCQQB2f+dSZTA1NwkwRX859VEyywo112/lvJcEo5G
+          Xn3GlqeigwIDAQABo0IwQDAdBgNVHQ4EFgQUmZsr9n/9uDp+a3cExuHdLrwfVf8w
+          EgYDVR0TAQH/BAgwBgEB/wIBADALBgNVHQ8EBAMCAQYwDQYJKoZIhvcNAQEMBQAD
+          ggGBAI+O65h/bdmfQ256Xq6eejFQGTbTwrU5IWVf/gn7Dftl/qGd8CW5aHxzRtFa
+          E6JODlMjmAtEqTnVSxDEr6ITWwNvcFit6maf/2x+bS0rfx44SidYed4XxoKayL60
+          KIEBIytlNwpiUVzF7nGIzPbt/F4tl7bVwqbYGzpwKvVzGTOEMtMVcISu26MTSOOM
+          YyILgijNjDME9OPFWGA58zKIUy+p2opXvkyDB2Ah0y+HmLVao6ggf9KYYhQINlS7
+          TwZuaAgGItKfI7SPSO7URsf+sMxlAu/fuzChG0we772eIm8U07ZtlpBWC5QBBFdn
+          LBbMZlifDsY4lqhmBNPowPd0+yrYQGYxswCLF328id/cxk+g8C0FEItjxCEE5HyP
+          zwDtjmgqJHTcUe//NYq77ks1WF+SF/KNHr0KrgB5bvzp02ItxQfMOpOQrmZg0zoZ
+          73VnC64JhIe2DYEvQPqc3PeFVA+rYuj/M5yXCkSSvgpOFvbZWi1n+YvUOmDwsirT
+          qOzM7w==
+          -----END CERTIFICATE-----
